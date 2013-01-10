@@ -44,7 +44,7 @@ void NCLRUCache::Handle(int content_no, GaloisElemV factor, int element_size)
 	{
 		if(Independent(content_no, factor))
 		{
-			Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Independent, recoding" << endl;
+			//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Independent, recoding" << endl;
 			for(list<NCContentElement>::iterator it = order.begin(); it != order.end(); it++)
 			{
 				if(it->_content_no == content_no)
@@ -58,27 +58,28 @@ void NCLRUCache::Handle(int content_no, GaloisElemV factor, int element_size)
 	}
 	if(left >= element_size)					//add new 
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() left > 0 add new " << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() left > 0 add new " << endl;
 		AddNew(content_no, factor, element_size);
-		Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new fin" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new fin" << endl;
 		return;
 	}
 	if(order.empty())
 		return;
 	//replace and renew
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast" << endl;
 	RemoveLast();
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast fin" << endl;
 	
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new after removed" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new after removed" << endl;
 	AddNew(content_no, factor, element_size);
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new fin" << endl;
 	Renew(content_no);
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Renew fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Renew fin" << endl;
 }
 
 void NCLRUCache::AddNew(int content_no, GaloisElemV factor, int element_size)
 {
+	//Logger::Log(LOGGER_VERY_DETAIL) << " NCLRUCache::AddNew()" << content_no << endl;
 	left -= element_size;
 	for(list<NCContentElement>::iterator it = order.begin(); it != order.end(); it++)
 	{
@@ -95,7 +96,7 @@ void NCLRUCache::AddNew(int content_no, GaloisElemV factor, int element_size)
 
 void NCLRUCache::Renew(int content_no)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << " NCLRUCache::Renew()" << content_no << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << " NCLRUCache::Renew()" << content_no << endl;
 	for(list<NCContentElement>::iterator it = order.begin(); it != order.end(); it++)
 	{
 		if(it->_content_no == content_no)
@@ -112,16 +113,16 @@ void NCLRUCache::Renew(int content_no)
 
 void NCLRUCache::RemoveLast()
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::RemoveLast()" << order.size() << endl;
-	NCContentElement ce_end = order.back();
-	if(ce_end.RemoveLast())
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::RemoveLast()" << order.size() << endl;
+	//NCContentElement ce_end = order.back();
+	if((--order.end())->RemoveLast())
 	{
-		left++;
 		order.pop_back();
 	}
 	left++;
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::RemoveLast() fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::RemoveLast() fin" << endl;
 }
+/*
 void NCLRUCache::RemoveLast(int content_no)
 {
 	Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::RemoveLast(" << content_no << ")" << endl;
@@ -158,7 +159,7 @@ void NCLRUCache::RemoveLast(int content_no)
 	
 	
 }
-
+*/
 
 bool NCLRUCache::Contains(int content_no)
 {
@@ -195,8 +196,8 @@ bool NCLRUCache::ContainsOther(int content_no, GaloisElemVV already_have_factors
 		{
 			for(GaloisElemVV::iterator fac_it = ce_it->_factors.begin(); fac_it != ce_it->_factors.end(); fac_it++)
 			{
-				Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::ContainsOther(" << (fac_it - ce_it->_factors.begin()) << ")" 
-					<< fac_it->size() << endl;
+				//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::ContainsOther(" << (fac_it - ce_it->_factors.begin()) << ")" 
+				//	<< fac_it->size() << endl;
 				if(independenceMulti(already_have_factors,*fac_it))
 					return true;
 			}

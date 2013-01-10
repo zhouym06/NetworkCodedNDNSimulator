@@ -46,9 +46,6 @@ void SimpleLinearTopoTest()
 
 void LinearTopoTest()
 {
-	
-
-
 	for(int slice_per_content_i = 0; slice_per_content_i < slice_per_content_l; slice_per_content_i ++)
 	{
 		int slice_per_content = slice_per_content_s[slice_per_content_i];

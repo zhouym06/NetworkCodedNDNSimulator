@@ -40,7 +40,7 @@ bool ContentPIT::Handle(const ContentTask* c_task, Router* from)
 	}
 	for(set<Router*>::iterator it = content_table[c_task->GetSliceNo()].begin(); it != content_table[c_task->GetSliceNo()].end(); it++)
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << " ContentPIT::Handle(ContentTask* c_task) foward to router" << (*it)->GetRouterID()  << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << " ContentPIT::Handle(ContentTask* c_task) foward to router" << (*it)->GetRouterID()  << endl;
 		ContentTask* ct = new ContentTask();
 		//double time = c_task->GetTime() + content_table.size() * 0.1;
 		double time = c_task->GetTime() + 1 * 0.1;
@@ -49,7 +49,7 @@ bool ContentPIT::Handle(const ContentTask* c_task, Router* from)
 	}
 	content_table.erase(c_task->GetSliceNo());
 	
-	Logger::Log(LOGGER_VERY_DETAIL) << "ContentPIT::Handle(ContentTask* c_task) fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "ContentPIT::Handle(ContentTask* c_task) fin" << endl;
 	if(content_table.size() == 0)
 		return true;
 	return false;

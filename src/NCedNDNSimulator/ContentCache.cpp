@@ -21,7 +21,7 @@ void ContentCache::Add(int slice_no,CacheElement element)
 }
 void ContentCache::Remove(int slice_no)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "ContentCache::Remove(slice" << slice_no << ")" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "ContentCache::Remove(slice" << slice_no << ")" << endl;
 	slices.erase(slice_no);
 }
 
@@ -43,7 +43,7 @@ CacheElement ContentCache::GetElement(int slice_no)
 }
 int ContentCache::Size()
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "ContentCache::Size()" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "ContentCache::Size()" << endl;
 	return slices.size();
 }
 

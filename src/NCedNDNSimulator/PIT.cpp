@@ -32,7 +32,7 @@ bool PIT::AddPI(int content_no, int slice_no, Router* pendingSrc)
 
 void PIT::Handle(const ContentTask* c_task, Router* from)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "PIT::Handle(ContentTask* c_task) fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "PIT::Handle(ContentTask* c_task) fin" << endl;
 	if(pending_interests_table.find(c_task->GetContentNo()) == pending_interests_table.end())
 	{
 		Logger::Log(LOGGER_ERROR) << "PIT::Handle(ContentTask* c_task): content not in pit" << endl;
@@ -40,7 +40,7 @@ void PIT::Handle(const ContentTask* c_task, Router* from)
 	}
 	if(pending_interests_table[c_task->GetContentNo()].Handle(c_task, from))
 		pending_interests_table.erase(c_task->GetContentNo());
-	Logger::Log(LOGGER_VERY_DETAIL) << "PIT::Handle(ContentTask* c_task) fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "PIT::Handle(ContentTask* c_task) fin" << endl;
 	
 }
 /*

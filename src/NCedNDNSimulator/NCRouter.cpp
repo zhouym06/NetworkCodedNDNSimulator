@@ -72,11 +72,11 @@ void NCRouter::Handle(const NCInterestTask* i_task)
 	//cache中无该内容或仅有线性相关内容
 	Statistic::CountMiss(i_task->_content_no);
 	//即使pit中已曾经发送该content也要发送
-	Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test1" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test1" << endl;
 	ncpit.AddPI(i_task->_content_no, i_task->_already_have, i_task->_from);
-	Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test2" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test2" << endl;
 	int i = ncfib.GetNextInterface(i_task->_serverNo);
-	Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test3" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << " NCRouter::Handle(InterestTask) test3" << endl;
 	double time = i_task->GetTime() + ncfib.GetLookupTime();
 	TimeLine::Add(new NCInterestTask(i_task->_content_no, i_task->_already_have, i_task->_serverNo,
 		this, (NCRouter*)interfaces[i]->TheOther(this), time));

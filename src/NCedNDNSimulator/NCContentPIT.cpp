@@ -31,11 +31,11 @@ bool NCContentPIT::Handle(const NCContentTask* c_task, NCRouter* this_router)
 			ct->Init(c_task->_content_no, c_task->_factor, this_router, it->first, c_task->_time + ((double)_already_haves.size()) * 0.1);
 			TimeLine::Add(ct);
 			it = _already_haves.erase(it);
-			Logger::Log(LOGGER_VERY_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct):" << "independent." << endl;
+			//Logger::Log(LOGGER_VERY_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct):" << "independent." << endl;
 		}
 		else
 		{
-			Logger::Log(LOGGER_VERY_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct):" << "not independent. left" << endl;
+			//Logger::Log(LOGGER_VERY_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct):" << "not independent. left" << endl;
 			it++;
 		}
 	}

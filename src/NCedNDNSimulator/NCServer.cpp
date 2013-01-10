@@ -52,7 +52,7 @@ void NCServer::Handle(const NCInterestTask* i_task)
 	
 	double time = i_task->GetTime() + GetServeTime();
 	NCContentTask* ct = new NCContentTask();
-	ct->Init(i_task->_content_no, generateRandomNC(_content_size), this, i_task->_from, time);
+	ct->Init(i_task->_content_no, generateRandomNC(8), this, i_task->_from, time);
 
 	Statistic::CountServerLoad(i_task->_content_no);
 	TimeLine::Add(ct);

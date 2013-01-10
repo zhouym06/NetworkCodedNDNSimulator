@@ -5,16 +5,19 @@ int main()
 {
 	//todo:TTL
 	//TestReCode();
-	//todo
-	//TestReCode2();
+	//TestReCode3();
 	//SimpleLinearTopoTest();
-	LinearTopoTest();
 	//SimpleTreeTopoTest();
+	LinearTopoTest();
 	TreeTopoTest();
 	//LinearCacheFigure1();
 	//TreeCacheFigure1();
-	TestUniformLinear();
-	TestUniformTree();
+	//TestUniformLinear();
+	//TestUniformTree();
+
+	
+	//TestLittleCacheLinear();
+	//TestLittleCacheTree();
 
 	return 0;
 }

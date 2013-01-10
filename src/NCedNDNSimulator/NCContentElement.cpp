@@ -29,16 +29,18 @@ void NCContentElement::AddNew(int content_no, GaloisElemV factor)
 		Logger::Log(LOGGER_ERROR) << "ERROR!:NCContentElement::AddNew(int content_no, GaloisElemV factor): content no dismatch" << content_no << endl;
 	}
 	_factors.push_back(factor);
+	Recode(factor);
+
 }
 
 void NCContentElement::Recode(GaloisElemV factor)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "NCContentElement::Recode(GaloisElemV factor)" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "NCContentElement::Recode(GaloisElemV factor)" << endl;
 	MTRand CodingCoefficient;
 	int x = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
 	GaloisElem a(&gf, x);
 	int y = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
-	GaloisElem b(&gf, x);
+	GaloisElem b(&gf, y);
 
 	for(GaloisElemVV::iterator it_vv = _factors.begin();it_vv != _factors.end(); it_vv++)
 	{

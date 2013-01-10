@@ -35,7 +35,7 @@ private:
 	//NCContentElement* Find(int content_no);
 	bool ContentFull(int content_no);
 	void RemoveLast();
-	void RemoveLast(int content_no);
+	//void RemoveLast(int content_no);
 };
 
 #endif

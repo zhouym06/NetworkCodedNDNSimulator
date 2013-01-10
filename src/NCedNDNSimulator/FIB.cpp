@@ -60,7 +60,7 @@ bool FIB::Announce(AnnoucePacket* a_packet, int from_interface, double arrive_ti
 
 int FIB::GetNextInterface(int server_no)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "FIB::GetNextInterface( " << server_no << ")" << entries[server_no]._next_interface << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "FIB::GetNextInterface( " << server_no << ")" << entries[server_no]._next_interface << endl;
 	return entries[server_no]._next_interface;
 }
 

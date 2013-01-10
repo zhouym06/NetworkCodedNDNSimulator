@@ -32,16 +32,16 @@ void LRUCache::Handle(int content_no, int slice_no, int element_size)
 	Logger::Log(LOGGER_ROUTER) << "LRUCache::Handle" << endl;
 	if(Contains(content_no, slice_no))			//renew
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() renew" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() renew" << endl;
 		Renew(content_no, slice_no);
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() renew fin" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() renew fin" << endl;
 		return;
 	}
 	if(left >= element_size)					//add new 
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() left > 0 add new " << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() left > 0 add new " << endl;
 		AddNew(content_no, slice_no, element_size);
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new fin" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new fin" << endl;
 		return;
 	}
 	if(order.empty())
@@ -49,19 +49,19 @@ void LRUCache::Handle(int content_no, int slice_no, int element_size)
 	//replace
 	if(ContentFull(content_no))
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast" << content_no << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast" << content_no << endl;
 		RemoveLast(content_no);
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast fin" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast fin" << endl;
 	}
 	else 
 	{
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast" << endl;
 		RemoveLast();
-		Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast fin" << endl;
+		//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() RemoveLast fin" << endl;
 	}
-	Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new after removed" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new after removed" << endl;
 	AddNew(content_no, slice_no, element_size);
-	Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::Handle() add new fin" << endl;
 }
 
 void LRUCache::AddNew(int content_no, int slice_no, int element_size)
@@ -80,15 +80,15 @@ void LRUCache::Renew(int content_no, int slice_no)
 
 void LRUCache::RemoveLast()
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast()" << order.size() << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast()" << order.size() << endl;
 	CacheElement* ce_end = order.back();
 	order.pop_back();
 	delete ce_end;
-	Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast() fin" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast() fin" << endl;
 }
 void LRUCache::RemoveLast(int content_no)
 {
-	Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast(" << content_no << ")" << endl;
+	//Logger::Log(LOGGER_VERY_DETAIL) << "LRUCache::RemoveLast(" << content_no << ")" << endl;
 	CacheElement* content_end = NULL;
 	bool not_found = true;
 	list<CacheElement*>::iterator it = order.end();

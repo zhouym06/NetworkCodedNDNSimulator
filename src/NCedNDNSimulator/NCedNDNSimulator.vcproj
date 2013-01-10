@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestLittleCache.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestReCode.cpp"
 				>
 			</File>

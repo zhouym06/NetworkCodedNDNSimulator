@@ -1,6 +1,7 @@
 
 #include "RequestsGenerator.h"
 #include "MyRandom.h"
+#include "Logger.h"
 #include "Common.h"
 
 
@@ -24,7 +25,9 @@ Requests* RequestsGenerator::GenUniformRequests(int request_num, int content_num
 	// Hit of contentNo is distributed  Evenly
 	
 	for (int i = 0; i < request_num; i++) {
+		
 		c_no = (int) (max_content_num * MyRandom::NextDouble());
+		Logger::Log(LOGGER_DEBUG) << "RequestsGenerator::GenUniformRequests() requesting" << c_no << "" << std::endl;
 		time += MyRandom::NextPoisson(1) / 10; 
 		r->Set(new Request(c_no, time), i);
 	}
@@ -45,7 +48,7 @@ Requests* RequestsGenerator::GenPoissonRequests(int request_num, int content_num
 	
 	for (int i = 0; i < request_num; i++) {
 		c_no = (int) (GetContentNo(MyRandom::NextDouble()));
-		
+		Logger::Log(LOGGER_DEBUG) << "RequestsGenerator::GenUniformRequests() requesting" << c_no << "" << std::endl;
 
 		// 10 request is generated each second?
 		time += MyRandom::NextPoisson(1) / 10; 
