@@ -6,10 +6,12 @@ int main()
 	//todo:TTL
 	//TestReCode();
 	//TestReCode3();
+	//TestReCode4();
+	TestReCode5();
 	//SimpleLinearTopoTest();
 	//SimpleTreeTopoTest();
-	LinearTopoTest();
-	TreeTopoTest();
+	//LinearTopoTest();
+	//TreeTopoTest();
 	//LinearCacheFigure1();
 	//TreeCacheFigure1();
 	//TestUniformLinear();

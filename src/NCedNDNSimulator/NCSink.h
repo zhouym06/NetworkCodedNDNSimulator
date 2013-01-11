@@ -8,11 +8,11 @@
 #define SINK_BASE -100
 
 class NCSink:public NCRouter{
-	int				_content_size;
-	int				_content_num;
-	int*			_server_of_content;
-	NCRouter*		_linkedTo;
-	GaloisElemVV**	_already_have;
+	int						_content_size;
+	int						_content_num;
+	int*					_server_of_content;
+	NCRouter*				_linkedTo;
+	vector<GaloisElemVV>	_already_have;
 public:
 	NCSink(){}
 	~NCSink();

@@ -72,6 +72,9 @@ void LinearTopoTest()
 						char* name = new char[80];
 
 
+						/*
+
+
 						sprintf(name,"LinearTopoTest-UC-ContentNum%d-ContentSize%d-K%d-TotalCache%d.txt",content_num,slice_per_content,k,total_cache_size);
 						if(Logger::Exist(name))
 							cout << "skipping" << name << endl;
@@ -88,6 +91,7 @@ void LinearTopoTest()
 							Statistic::Display();
 							delete line_topo;
 						}
+						*/
 						sprintf(name,"LinearTopoTest-NC-ContentNum%d-ContentSize%d-K%d-TotalCache%d.txt",content_num,slice_per_content,k,total_cache_size);;
 						if(Logger::Exist(name))
 							cout << "skipping" << name << endl;

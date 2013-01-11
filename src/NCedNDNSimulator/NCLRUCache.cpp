@@ -40,17 +40,16 @@ void NCLRUCache::Handle(int content_no, GaloisElemV factor, int element_size)
 {
 	Logger::Log(LOGGER_ROUTER) << "NCLRUCache::Handle()" << endl;
 
+	if(!Independent(content_no, factor))
+		return;
 	if(ContentFull(content_no))
 	{
-		if(Independent(content_no, factor))
+		//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Independent, recoding" << endl;
+		for(list<NCContentElement>::iterator it = order.begin(); it != order.end(); it++)
 		{
-			//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() Independent, recoding" << endl;
-			for(list<NCContentElement>::iterator it = order.begin(); it != order.end(); it++)
+			if(it->_content_no == content_no)
 			{
-				if(it->_content_no == content_no)
-				{
-					it->Recode(factor);
-				}
+				it->Recode(factor);
 			}
 		}
 		Renew(content_no);
@@ -67,7 +66,8 @@ void NCLRUCache::Handle(int content_no, GaloisElemV factor, int element_size)
 		return;
 	//replace and renew
 	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast" << endl;
-	RemoveLast();
+	while(left < element_size)
+		RemoveLast();
 	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() RemoveLast fin" << endl;
 	
 	//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::Handle() add new after removed" << endl;
@@ -182,8 +182,8 @@ bool NCLRUCache::Independent(int content_no, GaloisElemV factor)
 			return false;
 		}
 	}
-	Logger::Log(LOGGER_ERROR) << "NCLRUCache::Independent():content_no not found" << endl;
-	return false;
+	//Logger::Log(LOGGER_ERROR) << "NCLRUCache::Independent():content_no not found" << endl;
+	return true;
 }
 
 bool NCLRUCache::ContainsOther(int content_no, GaloisElemVV already_have_factors)
@@ -198,7 +198,7 @@ bool NCLRUCache::ContainsOther(int content_no, GaloisElemVV already_have_factors
 			{
 				//Logger::Log(LOGGER_VERY_DETAIL) << "NCLRUCache::ContainsOther(" << (fac_it - ce_it->_factors.begin()) << ")" 
 				//	<< fac_it->size() << endl;
-				if(independenceMulti(already_have_factors,*fac_it))
+				if(independenceMulti(already_have_factors,*fac_it) == 1)
 					return true;
 			}
 			return false;
@@ -216,7 +216,7 @@ GaloisElemV NCLRUCache::GetOther(int content_no, GaloisElemVV already_have_facto
 		{
 			for(GaloisElemVV::iterator it = ce->_factors.begin(); it != ce->_factors.end(); it++)
 			{
-				if(independenceMulti(already_have_factors,*it))
+				if(independenceMulti(already_have_factors,*it) == 1)
 					return (*it);
 			}
 			Logger::Log(LOGGER_ERROR) << "NCLRUCache::GetOther(int content_no, GaloisElemVV already_have_factors): No independent Vector" << endl;

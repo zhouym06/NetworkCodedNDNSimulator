@@ -5,6 +5,8 @@
 void TestReCode();
 void TestReCode2();
 void TestReCode3();
+void TestReCode4();
+void TestReCode5();
 
 void LinearTopoTest();
 void SimpleLinearTopoTest();

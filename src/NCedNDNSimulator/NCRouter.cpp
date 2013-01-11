@@ -64,6 +64,7 @@ void NCRouter::Handle(const NCInterestTask* i_task)
 		NCContentTask* ct = new NCContentTask();
 		ct->Init(i_task->_content_no, nccache.GetOther(i_task->_content_no,i_task->_already_have),this,i_task->_from,
 			i_task->GetTime()+nccache.GetLookupTime());
+		
 		TimeLine::Add(ct);
 		Statistic::CountHit(i_task->_content_no);
 		Logger::Log(LOGGER_DEBUG) << " NCRouter::Handle(InterestTask) cache hit" << endl;

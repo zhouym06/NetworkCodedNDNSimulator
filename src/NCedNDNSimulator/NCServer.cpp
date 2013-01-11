@@ -50,9 +50,19 @@ void NCServer::Handle(const NCInterestTask* i_task)
 	Logger::Log(LOGGER_DEBUG) << " NCServer::Handle(NCInterestTask)c" << i_task->_content_no << "s" << "-" << endl;
 	
 	
+	if((i_task->_already_have.size() > 0) &&(gaussElimination(i_task->_already_have) == 0))
+	{
+		Logger::Log(LOGGER_ERROR) << " NCServer::Handle(" << i_task->_content_no << ") i_task's already have isn't independent" << endl;
+	}
 	double time = i_task->GetTime() + GetServeTime();
 	NCContentTask* ct = new NCContentTask();
-	ct->Init(i_task->_content_no, generateRandomNC(8), this, i_task->_from, time);
+	GaloisElemV factor = generateRandomNC(_content_size);
+	do
+	{
+		factor = generateRandomNC(_content_size);
+	}while(!independenceMulti(i_task->_already_have, factor));
+	
+	ct->Init(i_task->_content_no, factor, this, i_task->_from, time);
 
 	Statistic::CountServerLoad(i_task->_content_no);
 	TimeLine::Add(ct);

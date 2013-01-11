@@ -8,6 +8,11 @@
 #include <iostream>
 using namespace std;
 
+
+bool ContainsOther(GaloisElemVV cache, GaloisElemVV already_have_factors);
+
+
+
 void Recode(GaloisElemVV& _factors, GaloisElemV factor)
 {
 	cout << "Recode(GaloisElemVV& in_cache, const GaloisElemV new_come)" << endl;
@@ -130,5 +135,56 @@ void TestReCode3()
 	}else{
 		cout << "Recode not independenceMulti" << endl;
 	}
+
+}
+
+
+
+void TestReCode4()
+{
+
+	cout << " TestReCode4()" << endl;
+	GaloisElemVV vv;
+	GaloisElemV _x1 = generateRandomNC(8);
+
+	vv.push_back(_x1);
+	vv.push_back(_x1);
+
+	cout << gaussElimination(vv) << endl;
+}
+
+
+bool ContainsOther(GaloisElemVV cache, GaloisElemVV already_have_factors)
+{
+	for(GaloisElemVV::iterator c_it = cache.begin(); c_it != cache.end(); c_it++)
+	{
+		if(independenceMulti(already_have_factors, *c_it) == 1)
+			return true;
+	}
+	return false;
+}
+
+void TestReCode5()
+{
+
+	cout << " TestReCode4()" << endl;
+	GaloisElemVV vv;
+	GaloisElemV x1 = generateRandomNC(8);
+	GaloisElemV x2 = generateRandomNC(8);
+
+	GaloisElemVV c1v;
+	GaloisElemVV sink;
+
+	c1v.push_back(x1);
+	sink.push_back(x1);
+
+	Recode(c1v,x2);
+
+	sink.push_back(x2);
+
+	if(ContainsOther(c1v, sink))
+		cout << "ContainsOther(c1v, sink)" << endl;
+	else
+		cout << "Doesn't ContainsOther(c1v, sink)" << endl;
 
 }

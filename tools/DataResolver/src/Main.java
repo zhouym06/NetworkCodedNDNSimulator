@@ -32,8 +32,7 @@ public class Main {
 		String dir2 = "D:/NDNlog2/NDNlog-linear-c_size10/";
 		String dir3 = "D:/NDNlog2/NDNlog-figure1-cahce-withoutK/";
 		String dir4 = "D:/NDNlog2/NDNlog-AllCache-WithUniform/";
-		
-		
+		String dir5 = "D:/NDNlog2/NDNlog-forLittleCache/";
 		/*
 		String prefix = "TreeTopoTest-NC";
 		handle(dir1, prefix);
@@ -43,17 +42,41 @@ public class Main {
 		handle(dir2, prefix);
 		prefix = "LinearTopoTest-NC";
 		handle(dir2, prefix);
+		*/
 		
 		removeUnfinished(dir3);
 		handleFig1NCUC(dir3, "LinearTopoTest");
 		handleFig1NCUC(dir3, "TreeTopoTest");
-		*/
+		/*
+		
 		handleFigK(dir4, "LinearTopoTest");
 		handleFigK(dir4, "TreeTopoTest");
 		handleFigK(dir4, "TestUniformLinear");
 		handleFigK(dir4, "TestUniformTree");
 		
 		
+		handleLittleCache(dir5, "LinearTopoTest");
+		handleLittleCache(dir5, "TreeTopoTest");
+		
+		*/
+		
+		
+	}
+
+	private static void handleLittleCache(String dir, String prefix) {
+		double[][][] dataNC = new double[4][10][7];
+		double[][][] dataUC = new double[4][10][7];
+		for(int ContentNum_i = 0; ContentNum_i < 3; ContentNum_i++)
+		{
+			for(int cp_i = 1; cp_i <= 10; cp_i += 1)
+			{
+				int k = 1000;
+				dataNC[ContentNum_i][cp_i - 1] = GetData(dir, prefix + "-NC", ContentNums[ContentNum_i], k, (int)(ContentNums[ContentNum_i] * ContentSize * cp_i / 100));
+				dataUC[ContentNum_i][cp_i - 1] = GetData(dir, prefix + "-UC", ContentNums[ContentNum_i], k, (int)(ContentNums[ContentNum_i] * ContentSize * cp_i / 100));					
+			
+			}
+			fig1output(dir + prefix + "-ContentNum" + ContentNums[ContentNum_i], ContentNum_i, dataNC[ContentNum_i], dataUC[ContentNum_i]);
+		}
 		
 	}
 
