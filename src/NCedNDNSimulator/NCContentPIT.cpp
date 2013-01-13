@@ -41,9 +41,9 @@ bool NCContentPIT::Handle(const NCContentTask* c_task, NCRouter* this_router)
 	}
 	if(_already_haves.size() == 0)
 	{
-		Logger::Log(LOGGER_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct) fin, all consumed" << endl;
+		Logger::Log(LOGGER_DEBUG) << " NCContentPIT::Handle(NCContentTask " << c_task->_content_no << ") fin, all consumed" << endl;
 		return true;
 	}
-	Logger::Log(LOGGER_DETAIL) << " NCContentPIT::Handle(NCContentTask* ct) fin, someone left" << endl;
+	Logger::Log(LOGGER_DEBUG) << " NCContentPIT::Handle(NCContentTask " << c_task->_content_no << ") fin, someone left" << endl;
 	return false;
 }

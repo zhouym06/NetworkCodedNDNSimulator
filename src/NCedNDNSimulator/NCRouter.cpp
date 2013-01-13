@@ -51,7 +51,7 @@ void NCRouter::Init(int r_id, int cacheSize, int k, int server_num)
 void NCRouter::Handle(const NCInterestTask* i_task)
 {
 	Logger::Log(LOGGER_DETAIL) 
-		<< "NCRouter::Handle NCInterestTask(c" << i_task->_content_no << "s" << "-"
+		<< "NCRouter" << _router_id << "::Handle NCInterestTask(c" << i_task->_content_no << "s" << "-"
 		<< "@server" << i_task->_serverNo << ") from router " << i_task->_from->GetRouterID()
 		<< " at router " << i_task->_to->GetRouterID() << " == " << _router_id << " at " << i_task->GetTime()
 		<< std::endl;
@@ -59,7 +59,7 @@ void NCRouter::Handle(const NCInterestTask* i_task)
 	//cache中有该内容且有线性无关内容
 	if(nccache.ContainsOther(i_task->_content_no,i_task->_already_have))
 	{
-		Logger::Log(LOGGER_DEBUG) << " NCRouter::Handle(InterestTask) cache begin" << endl;
+		Logger::Log(LOGGER_DEBUG) << " NCRouter" << _router_id << "::Handle(InterestTask) cache begin" << endl;
 		//cache->Renew(i_task->_content_no);
 		NCContentTask* ct = new NCContentTask();
 		ct->Init(i_task->_content_no, nccache.GetOther(i_task->_content_no,i_task->_already_have),this,i_task->_from,
@@ -67,7 +67,7 @@ void NCRouter::Handle(const NCInterestTask* i_task)
 		
 		TimeLine::Add(ct);
 		Statistic::CountHit(i_task->_content_no);
-		Logger::Log(LOGGER_DEBUG) << " NCRouter::Handle(InterestTask) cache hit" << endl;
+		Logger::Log(LOGGER_DEBUG) << " NCRouter" << _router_id << "::Handle(InterestTask) cache hit" << endl;
 		return;
 	}
 	//cache中无该内容或仅有线性相关内容
@@ -81,7 +81,7 @@ void NCRouter::Handle(const NCInterestTask* i_task)
 	double time = i_task->GetTime() + ncfib.GetLookupTime();
 	TimeLine::Add(new NCInterestTask(i_task->_content_no, i_task->_already_have, i_task->_serverNo,
 		this, (NCRouter*)interfaces[i]->TheOther(this), time));
-	Logger::Log(LOGGER_DEBUG) << " NCRouter::Handle(InterestTask) cache miss, pit added, fowarding " << endl;
+	Logger::Log(LOGGER_DEBUG) << " NCRouter" << _router_id << "::Handle(InterestTask) cache miss, pit added, fowarding " << endl;
 	return;
 }
 void NCRouter::Handle(const NCContentTask* c_task)

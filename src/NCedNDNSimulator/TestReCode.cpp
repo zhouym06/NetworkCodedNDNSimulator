@@ -18,18 +18,20 @@ void Recode(GaloisElemVV& _factors, GaloisElemV factor)
 	cout << "Recode(GaloisElemVV& in_cache, const GaloisElemV new_come)" << endl;
 	MTRand CodingCoefficient;
 	int x = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
+	//int x = 1;
 	GaloisElem a(&gf, x);
 	int y = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
+	//int y = 1;
 	GaloisElem b(&gf, y);
 
 	for(GaloisElemVV::iterator it_vv = _factors.begin();it_vv != _factors.end(); it_vv++)
 	{
 		GaloisElemV::iterator it_f = factor.begin();
-		for(GaloisElemV::iterator it_v = it_vv->begin(); it_v != it_vv->end(); it_v++)
+		GaloisElemV::iterator it_v = it_vv->begin();
+		for(; it_v != it_vv->end(); )
 		{
-			(*it_v)	*= a;
-			b		*= (*it_f);
-			(*it_v) += b;
+			(*it_v) = a * (*it_v) + b * (*it_f);
+			it_v++;
 			it_f++;
 		}
 	}
@@ -49,9 +51,7 @@ void Recode(GaloisElemV& des, GaloisElemV src)
 	for(;it_des != des.end(); )
 	{	
 		
-		(*it_des)	*= a;
-		b		*= (*it_src);
-		(*it_des) += b;
+		(*it_des)	= a * (*it_des) + b * (*it_src);
 
 		it_des++;
 		it_src++;
@@ -146,9 +146,65 @@ void TestReCode4()
 	cout << " TestReCode4()" << endl;
 	GaloisElemVV vv;
 	GaloisElemV _x1 = generateRandomNC(8);
+	GaloisElemV _x2 = generateRandomNC(8);
+	GaloisElemV _x3 = _x1;
+
+	GaloisElemV::iterator it_2 = _x2.begin();
+	GaloisElemV::iterator it_3 = _x3.begin();
+
+	for(; it_2 != _x2.end(); )
+	{
+		(*it_3) += *it_2;
+		it_2++;
+		it_3++;
+	}
+	it_2 = _x2.begin();
+	it_3 = _x3.begin();
+	for(; it_2 != _x2.end(); )
+	{
+		(*it_3) += *it_2;
+		it_2++;
+		it_3++;
+	}
 
 	vv.push_back(_x1);
+	vv.push_back(_x2);
+	vv.push_back(_x3);
+
+	cout << gaussElimination(vv) << endl;
+}
+
+
+void TestReCode5()
+{
+
+	cout << " TestReCode5()" << endl;
+	GaloisElemVV vv;
+	GaloisElemV _x1 = generateRandomNC(8);
+	GaloisElemV _x2 = generateRandomNC(8);
+	GaloisElemV _x3 = _x1;
+
+	MTRand CodingCoefficient;
+	int x = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
+	GaloisElem a(&gf, x);
+	int y = CodingCoefficient.randInt(CodingSpace)+1;//int(tompo);
+	GaloisElem b(&gf, y);
+
+	GaloisElemV::iterator it_2 = _x2.begin();
+	GaloisElemV::iterator it_3 = _x3.begin();
+
+	for(; it_2 != _x2.end(); )
+	{
+		(*it_3) *= a;
+		*it_2 *= b;
+		(*it_3) += *it_2;
+		it_2++;
+		it_3++;
+	}
+
 	vv.push_back(_x1);
+	vv.push_back(_x2);
+	vv.push_back(_x3);
 
 	cout << gaussElimination(vv) << endl;
 }
@@ -164,10 +220,10 @@ bool ContainsOther(GaloisElemVV cache, GaloisElemVV already_have_factors)
 	return false;
 }
 
-void TestReCode5()
+void TestReCode6()
 {
 
-	cout << " TestReCode4()" << endl;
+	cout << " TestReCode6()" << endl;
 	GaloisElemVV vv;
 	GaloisElemV x1 = generateRandomNC(8);
 	GaloisElemV x2 = generateRandomNC(8);
@@ -179,6 +235,10 @@ void TestReCode5()
 	sink.push_back(x1);
 
 	Recode(c1v,x2);
+	c1v.push_back(x1);
+	c1v.push_back(x2);
+	cout << gaussElimination(c1v) << endl;
+	/*
 
 	sink.push_back(x2);
 
@@ -187,4 +247,5 @@ void TestReCode5()
 	else
 		cout << "Doesn't ContainsOther(c1v, sink)" << endl;
 
+		*/
 }

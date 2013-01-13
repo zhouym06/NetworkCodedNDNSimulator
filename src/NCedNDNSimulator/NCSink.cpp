@@ -50,47 +50,34 @@ void NCSink::Handle(const NCContentTask* c_task)
 	Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(NCContentTask)" << endl;
 	int content_no = c_task->_content_no;
 	int size = _already_have[content_no].size();
-
+	int _rank = 0;
 	if(size > 0)
-		if(gaussElimination(_already_have[content_no]) == 0)
-			Logger::Log(LOGGER_ERROR) << " NCSink::Handle(" << content_no << ") recieving content already have" << endl;
+		_rank = rank(_already_have[content_no]);
+
+	if(size > _rank)
+		Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") recieving content already have" << endl;
 
 
 	_already_have[content_no].push_back(c_task->_factor);
 	size = _already_have[content_no].size();
 	int gauss = gaussElimination(_already_have[content_no]);
 	
-	
-	if((size >= _content_size) )
+	if(_rank >= _content_size)
 	{
-		//Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") one content fully decoded" << endl;
-		if(gauss == 1)
-		{
-			Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") one content fully decoded" << endl;
-			_already_have[content_no].clear();
-		}
-		//Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") one content fully decoded" << endl;
+		Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") one content fully decoded" << endl;
+		_already_have[content_no].clear();
 	}
-	//if((_already_have[content_no].size() >= _content_size) && (gaussElimination(_already_have[content_no]) == 1))
-	//{
-	//	Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") one content fully decoded" << endl;
-	//	_already_have[content_no].clear();
-	//}
 	else
 	{
 		Logger::Log(LOGGER_DEBUG) << " NCSink::Handle(" << content_no << ") recieved " << _already_have[content_no].size() << " slices and need more" << endl;
 		GaloisElemVV evv = _already_have[content_no];
-		if((_already_have[content_no].size() > 0) &&(gaussElimination(_already_have[content_no]) == 0))
+		if(size > 2 * _content_size)
 		{
-			Logger::Log(LOGGER_ERROR) << " NCSink::Handle(const NCInterestTask* i_task)" << c_task->_content_no << ") i_task's already have isn't independent" << endl;
+			Logger::Log(LOGGER_ERROR) << " NCSink::Handle(const NCInterestTask* i_task)" << c_task->_content_no << ") recieved too much but i_task's already have isn't independent" << _rank << endl;
 		}
-		//GaloisElemVV evv;
-		//for(GaloisElemVV::iterator it = _already_have[content_no].begin(); it != _already_have[content_no].end(); it++)
-		//	evv.push_back(*it);
-		double time = c_task->GetTime() + 1;
+		double time = c_task->GetTime() + 0.5;
 		NCInterestTask* ncit = new NCInterestTask();
-		ncit->Init(content_no, evv,
-			_server_of_content[content_no], this, _linkedTo, time);
+		ncit->Init(content_no, evv, _server_of_content[content_no], this, _linkedTo, time);
 		TimeLine::Add(ncit);
 		Statistic::CountRequest(content_no);
 	}

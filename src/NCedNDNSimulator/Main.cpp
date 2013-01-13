@@ -7,11 +7,12 @@ int main()
 	//TestReCode();
 	//TestReCode3();
 	//TestReCode4();
-	TestReCode5();
+	//TestReCode5();
+	//TestReCode6();
 	//SimpleLinearTopoTest();
 	//SimpleTreeTopoTest();
-	//LinearTopoTest();
-	//TreeTopoTest();
+	LinearTopoTest();
+	TreeTopoTest();
 	//LinearCacheFigure1();
 	//TreeCacheFigure1();
 	//TestUniformLinear();

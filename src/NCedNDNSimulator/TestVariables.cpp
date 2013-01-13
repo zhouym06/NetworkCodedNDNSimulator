@@ -10,8 +10,8 @@
 /**/
 	//for all k
 	int request_num				= 10000;
-	int content_num_s[1]		= {100};
-	int content_num_l			= 1;
+	int content_num_s[3]		= {10, 100, 1000};
+	int content_num_l			= 3;
 	int slice_per_content_s[1]	= {10};
 	int slice_per_content_l		= 1;
 

@@ -44,13 +44,13 @@ void NCContentElement::Recode(GaloisElemV factor)
 
 	for(GaloisElemVV::iterator it_vv = _factors.begin();it_vv != _factors.end(); it_vv++)
 	{
+		GaloisElemV::iterator it_v = it_vv->begin();
 		GaloisElemV::iterator it_f = factor.begin();
-		for(GaloisElemV::iterator it_v = it_vv->begin(); it_v != it_vv->end(); it_v++)
+		for(; it_v != it_vv->end(); )
 		{
-			(*it_v)	*= a;
-			b		*= (*it_f);
-			(*it_v) += b;
+			(*it_v)	= a * (*it_v) + b * (*it_f);
 			it_f++;
+			it_v++;
 		}
 	}
 }

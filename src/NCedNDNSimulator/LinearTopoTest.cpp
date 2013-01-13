@@ -72,7 +72,7 @@ void LinearTopoTest()
 						char* name = new char[80];
 
 
-						/*
+						/**/
 
 
 						sprintf(name,"LinearTopoTest-UC-ContentNum%d-ContentSize%d-K%d-TotalCache%d.txt",content_num,slice_per_content,k,total_cache_size);
@@ -91,7 +91,7 @@ void LinearTopoTest()
 							Statistic::Display();
 							delete line_topo;
 						}
-						*/
+						
 						sprintf(name,"LinearTopoTest-NC-ContentNum%d-ContentSize%d-K%d-TotalCache%d.txt",content_num,slice_per_content,k,total_cache_size);;
 						if(Logger::Exist(name))
 							cout << "skipping" << name << endl;
@@ -99,7 +99,7 @@ void LinearTopoTest()
 						{
 							cout << "starting" << name << endl;
 							Logger::Configure(name, LOGGER_INFO);
-							//Logger::Configure(name, LOGGER_VERY_DETAIL);
+							//Logger::Configure(name, LOGGER_DEBUG);
 							NCTopology* coded_line_topo = NCTopology::GenLineTopoWithNC(len, content_num, slice_per_content, k, cache_sizes);
 							Statistic::Init(content_num);
 							coded_line_topo->SetTimeLine(reqs, slice_per_content);

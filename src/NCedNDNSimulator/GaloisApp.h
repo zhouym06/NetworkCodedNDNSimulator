@@ -17,6 +17,7 @@ typedef galois::GaloisFieldElement GaloisElem;
 typedef std::vector<GaloisElem> GaloisElemV;
 typedef std::vector< GaloisElemV > GaloisElemVV;
 
+int rank(GaloisElemVV checkList);
 int gaussElimination(GaloisElemVV checkList);   //if independence return 1, else return 0
 int independenceIntra(int layerNumb, GaloisElemVV *listVV, GaloisElemV elemVect);  //判断elemVect与listVV是否线性独立,维度可能不一样
 int independenceMulti(GaloisElemVV listVV, GaloisElemV elemVect);  //维度一样

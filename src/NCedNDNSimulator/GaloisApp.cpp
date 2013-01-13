@@ -6,7 +6,8 @@ using namespace std;
 unsigned int prim_poly[9] = {1,1,1,0,0,0,0,1,1};
 galois::GaloisField gf(8,prim_poly);
 
-int gaussElimination(GaloisElemVV checkList){
+
+int rank(GaloisElemVV checkList){
 	int i,j,p,q,k;
 
 	const int m=checkList.size(), n=checkList[0].size();
@@ -48,7 +49,11 @@ int gaussElimination(GaloisElemVV checkList){
 	for(i=0; i<m; i++) for(j=0; j<n; j++){
 		if(checkList[i][j]!=0){	rank++;	break; }
 	}
-	if(rank==m) return 1;
+	return rank;
+}
+int gaussElimination(GaloisElemVV checkList){
+	
+	if(rank(checkList)==checkList.size()) return 1;
 	return 0;
 }
 int independenceIntra(int layerNumb, GaloisElemVV *listVV, GaloisElemV elemVect){
